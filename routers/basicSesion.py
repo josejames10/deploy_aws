@@ -44,11 +44,7 @@ def search_user(username: str):
 
 ##########revicion de diccionarios 
 async def current_user(token:str=Depends(oauth2)):
-    user = search_user(token)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="usuario no encontrado")
-        
-    return user 
+  c
 @app.post("/login")
 async def login(form: OAuth2PasswordRequestForm=Depends()):
     user_db=users_db.get(form.username)
@@ -56,8 +52,8 @@ async def login(form: OAuth2PasswordRequestForm=Depends()):
         raise HTTPException(
             status_code=400, detail="usuario no encontrado")
     
-    user= search_user(form.username)
-    if not form.password==user.password:
+    user= search_user_db(form.username)
+    if not form.password == user.password:
         raise HTTPException(status_code=400,detail="usuario no encontrado")
     
     return {"access_token":user.username, "token_type" : "bearer"}
